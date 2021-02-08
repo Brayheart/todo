@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do App</title>
+</head>
+<style>
+  .delete{
+    background-color: red;
+  }
+</style>
+<body>
+  <h1>Hello World</h1>
+  <div>
+    <h2>Add To Do:</h2>
+    <input type="text" placeholder="Kill all humans" id='input'>
+    <button type="button" onclick="getInputValue()">Add To Do</button>
+  </div>
+  <ul id='list'>
+    <li>Clean Room <button class="delete">Delete</button></li> 
+    <li>Take out the Trash</li> <button class="delete">Delete</button>
+    <li>Destroy the world</li> <button class="delete">Delete</button>
+  </ul>
+</body>
+<script>
+  function getInputValue(){
+    let li = document.createElement('li')
+    li.textContent = document.getElementById("input").value
+    document.getElementById("list").appendChild(li)
+  }
+</script>
+</html>
