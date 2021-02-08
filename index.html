@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To Do App</title>
 </head>
+
 <style>
   .delete{
     background-color: red;
   }
 </style>
+
 <body>
   <h1>Hello World</h1>
   <div>
@@ -20,15 +22,37 @@
   </div>
   <ul id='list'>
     <li>Clean Room <button class="delete">Delete</button></li> 
-    <li>Take out the Trash</li> <button class="delete">Delete</button>
-    <li>Destroy the world</li> <button class="delete">Delete</button>
+    <li>Take out the Trash  <button class="delete">Delete</button></li>
+    <li>Destroy the world <button class="delete">Delete</button></li> 
   </ul>
 </body>
+
 <script>
+  //Add values to list
   function getInputValue(){
     let li = document.createElement('li')
     li.textContent = document.getElementById("input").value
+
+    let button = document.createElement("button")
+    button.setAttribute('class', 'delete')
+    button.textContent = "Delete"
+    button.addEventListener("click", removeItem)
+    li.appendChild(button)
+
     document.getElementById("list").appendChild(li)
   }
+
+  //Delete values in list
+  var buttons = document.getElementsByClassName("delete")
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", removeItem)
+  }
+
+  function removeItem(){
+    this.parentNode.remove()
+  }
+
+
 </script>
 </html>
