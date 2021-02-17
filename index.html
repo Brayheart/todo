@@ -5,33 +5,45 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To Do App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
 <style>
   .delete{
     background-color: red;
   }
+  #warning{
+    visibility: hidden;
+  }
 </style>
 
 <body>
-  <h1>Hello World</h1>
-  <div>
-    <h2>Add To Do:</h2>
-    <input type="text" placeholder="Kill all humans" id='input'>
-    <button type="button" onclick="getInputValue()">Add To Do</button>
+  <div class="container">
+    <h1>Hello World</h1>
+      <div id = 'input_container'>
+    <h2>To Do:</h2>
+      <input type="text" placeholder="Kill all humans" id='input'>
+      <button type="button" onclick="getInputValue()">Add To Do</button>
+      <div id='warning'>Cannot add empty to do</div>
+    </div>
+    <ul id='list' class="list-group list-group-flush">
+      <li class="list-group-item">Make to do app<button class="delete">Delete</button></li> 
+    </ul>
   </div>
-  <ul id='list'>
-    <li>Clean Room <button class="delete">Delete</button></li> 
-    <li>Take out the Trash  <button class="delete">Delete</button></li>
-    <li>Destroy the world <button class="delete">Delete</button></li> 
-  </ul>
+  
 </body>
 
 <script>
-  //Add values to list
-  function getInputValue(){
+//render to do list items from local storage
+  var arr = []
+
+  var list = JSON.parse(localStorage.getItem('list')) || arr
+  console.log(list)
+  
+  list.forEach(element => {
     let li = document.createElement('li')
-    li.textContent = document.getElementById("input").value
+    li.textContent = element
+    li.setAttribute('class', 'list-group-item')
 
     let button = document.createElement("button")
     button.setAttribute('class', 'delete')
@@ -40,6 +52,35 @@
     li.appendChild(button)
 
     document.getElementById("list").appendChild(li)
+  });
+
+    //Add values to list
+  function getInputValue(){
+  
+    if(document.getElementById("input").value === ""){
+      document.getElementById("warning").style.visibility = "visible"
+      return
+    }
+
+    document.getElementById("warning").style.visibility = "hidden"
+
+    arr.push(document.getElementById("input").value)
+
+    localStorage.setItem('list', JSON.stringify(arr))
+
+    let li = document.createElement('li')
+    li.textContent = document.getElementById("input").value
+    li.setAttribute('class', 'list-group-item')
+
+    let button = document.createElement("button")
+    button.setAttribute('class', 'delete')
+    button.textContent = "Delete"
+    button.addEventListener("click", removeItem)
+    li.appendChild(button)
+
+    document.getElementById("list").appendChild(li)
+
+    document.getElementById("input").value = ""
   }
 
   //Delete values in list
@@ -51,6 +92,12 @@
 
   function removeItem(){
     this.parentNode.remove()
+
+    var arr = localStorage.getItem('list')
+
+    var newArr = JSON.parse(arr).filter(el => el != this.parentNode.textContent.replace('Delete', ''))
+
+    localStorage.setItem('list', JSON.stringify(newArr))
   }
 
 
