@@ -19,16 +19,23 @@
 
 <body>
   <div class="container">
-    <h1>Hello World</h1>
-      <div id = 'input_container'>
-    <h2>To Do:</h2>
-      <input type="text" placeholder="Kill all humans" id='input'>
-      <button type="button" onclick="getInputValue()">Add To Do</button>
-      <div id='warning'>Cannot add empty to do</div>
+    <div class="row">
+      <h1>My To Do</h1>
     </div>
+    <div class="row">
+      <h2>To Do:</h2>
+        <div>
+          <input type="text" placeholder="Kill all humans" id='input'>
+          <button type="button" onclick="getInputValue()">Add To Do</button>
+          <div id='warning'>Cannot add empty to do</div>
+        </div>
+      </div>
+    <div class="row">
     <ul id='list' class="list-group list-group-flush">
       <li class="list-group-item">Make to do app<button class="delete">Delete</button></li> 
     </ul>
+  </div>
+    </div>
   </div>
   
 </body>
@@ -39,7 +46,7 @@
 
   var list = JSON.parse(localStorage.getItem('list')) || arr
   console.log(list)
-  
+
   list.forEach(element => {
     let li = document.createElement('li')
     li.textContent = element
